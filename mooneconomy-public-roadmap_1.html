@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoonEconomy — Public Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050510;
+    --neon-pink: #ff2d75;
+    --neon-cyan: #00f0ff;
+    --neon-purple: #b44dff;
+    --neon-green: #39ff14;
+    --neon-orange: #ff9500;
+    --neon-yellow: #ffe600;
+    --text: #d8dce8;
+    --muted: #5a5e78;
+    --card-bg: rgba(10, 10, 30, 0.7);
+    --card-border: rgba(255,255,255,0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridScroll 20s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes gridScroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
+  }
+
+  /* Neon glow orbs */
+  .glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .g1 { width: 600px; height: 600px; background: var(--neon-pink); top: -200px; left: -100px; }
+  .g2 { width: 500px; height: 500px; background: var(--neon-cyan); top: 30%; right: -200px; }
+  .g3 { width: 500px; height: 500px; background: var(--neon-purple); bottom: 10%; left: 10%; }
+  .g4 { width: 400px; height: 400px; background: var(--neon-green); bottom: -100px; right: 20%; }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+  }
+
+  /* HEADER */
+  .hero {
+    text-align: center;
+    margin-bottom: 80px;
+    animation: fadeUp 1s ease-out;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px;
+    border: 1px solid rgba(0,240,255,0.3);
+    border-radius: 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--neon-cyan);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    background: rgba(0,240,255,0.05);
+  }
+
+  .hero-badge .pulse {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--neon-cyan); }
+    50% { opacity: 0.4; box-shadow: 0 0 2px var(--neon-cyan); }
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 900;
+    letter-spacing: 4px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 .line1 {
+    display: block;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
+
+  .hero h1 .line2 {
+    display: block;
+    font-size: 0.5em;
+    letter-spacing: 8px;
+    color: var(--muted);
+    -webkit-text-fill-color: var(--muted);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 24px;
+    line-height: 1.6;
+  }
+
+  .hero-token {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    border-radius: 12px;
+    background: rgba(57, 255, 20, 0.06);
+    border: 1px solid rgba(57, 255, 20, 0.2);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--neon-green);
+    letter-spacing: 2px;
+  }
+
+  .hero-token .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--neon-green);
+    box-shadow: 0 0 12px var(--neon-green);
+  }
+
+  /* CROSS THEMES BAR */
+  .cross-bar {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 64px;
+    animation: fadeUp 1s ease-out 0.2s both;
+    flex-wrap: wrap;
+  }
+
+  .cross-chip {
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  .cross-chip.robotics {
+    background: rgba(255,45,117,0.08);
+    border: 1px solid rgba(255,45,117,0.25);
+    color: var(--neon-pink);
+  }
+
+  .cross-chip.web3 {
+    background: rgba(0,240,255,0.08);
+    border: 1px solid rgba(0,240,255,0.25);
+    color: var(--neon-cyan);
+  }
+
+  .cross-chip.label {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-weight: 300;
+    padding-right: 4px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+  }
+
+  /* Horizontal neon line */
+  .timeline-line {
+    position: relative;
+    height: 4px;
+    border-radius: 2px;
+    margin-bottom: 64px;
+    overflow: visible;
+    animation: fadeUp 0.8s ease-out 0.3s both;
+  }
+
+  .timeline-line-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    background: linear-gradient(90deg, 
+      var(--neon-pink) 0%, 
+      var(--neon-purple) 20%, 
+      var(--neon-cyan) 40%, 
+      var(--neon-orange) 60%, 
+      var(--neon-green) 80%,
+      var(--neon-yellow) 100%
+    );
+    box-shadow: 
+      0 0 20px rgba(0,240,255,0.3),
+      0 0 60px rgba(0,240,255,0.1);
+  }
+
+  .timeline-dots {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 6%;
+    transform: translateY(-50%);
+  }
+
+  .t-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+    position: relative;
+  }
+
+  .t-dot::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    color: inherit;
+  }
+
+  .t-dot.d-1 { background: var(--neon-pink); color: var(--neon-pink); box-shadow: 0 0 16px rgba(255,45,117,0.5); }
+  .t-dot.d0 { background: var(--neon-purple); color: var(--neon-purple); box-shadow: 0 0 16px rgba(180,77,255,0.5); }
+  .t-dot.d1 { background: var(--neon-cyan); color: var(--neon-cyan); box-shadow: 0 0 16px rgba(0,240,255,0.5); }
+  .t-dot.d2 { background: var(--neon-orange); color: var(--neon-orange); box-shadow: 0 0 16px rgba(255,149,0,0.5); }
+  .t-dot.d3 { background: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 16px rgba(57,255,20,0.5); }
+
+  /* STAGE SECTIONS */
+  .stage {
+    margin-bottom: 72px;
+    animation: fadeUp 0.8s ease-out both;
+  }
+  .stage:nth-child(1) { animation-delay: 0.4s; }
+  .stage:nth-child(2) { animation-delay: 0.6s; }
+  .stage:nth-child(3) { animation-delay: 0.8s; }
+  .stage:nth-child(4) { animation-delay: 1.0s; }
+  .stage:nth-child(5) { animation-delay: 1.2s; }
+
+  .stage-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .stage-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.15;
+  }
+
+  .stage-info h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(16px, 3vw, 22px);
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .stage-info .timing {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .stage-focus {
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 20px;
+    padding-left: 4px;
+  }
+
+  /* Color schemes per stage */
+  .stage.s-1 .stage-num { color: var(--neon-pink); }
+  .stage.s-1 .stage-info h2 { color: var(--neon-pink); }
+  .stage.s-1 .stage-info .timing { color: rgba(255,45,117,0.6); }
+  .stage.s-1 .card { border-color: rgba(255,45,117,0.12); }
+  .stage.s-1 .card::before { background: var(--neon-pink); }
+  .stage.s-1 .card:hover { box-shadow: 0 0 40px rgba(255,45,117,0.15); }
+  .stage.s-1 .card-tag { background: rgba(255,45,117,0.1); color: var(--neon-pink); }
+  .stage.s-1 .card li::before { color: var(--neon-pink); }
+
+  .stage.s0 .stage-num { color: var(--neon-purple); }
+  .stage.s0 .stage-info h2 { color: var(--neon-purple); }
+  .stage.s0 .stage-info .timing { color: rgba(180,77,255,0.6); }
+  .stage.s0 .card { border-color: rgba(180,77,255,0.12); }
+  .stage.s0 .card::before { background: var(--neon-purple); }
+  .stage.s0 .card:hover { box-shadow: 0 0 40px rgba(180,77,255,0.15); }
+  .stage.s0 .card-tag { background: rgba(180,77,255,0.1); color: var(--neon-purple); }
+  .stage.s0 .card li::before { color: var(--neon-purple); }
+
+  .stage.s1 .stage-num { color: var(--neon-cyan); }
+  .stage.s1 .stage-info h2 { color: var(--neon-cyan); }
+  .stage.s1 .stage-info .timing { color: rgba(0,240,255,0.6); }
+  .stage.s1 .card { border-color: rgba(0,240,255,0.12); }
+  .stage.s1 .card::before { background: var(--neon-cyan); }
+  .stage.s1 .card:hover { box-shadow: 0 0 40px rgba(0,240,255,0.15); }
+  .stage.s1 .card-tag { background: rgba(0,240,255,0.1); color: var(--neon-cyan); }
+  .stage.s1 .card li::before { color: var(--neon-cyan); }
+
+  .stage.s2 .stage-num { color: var(--neon-orange); }
+  .stage.s2 .stage-info h2 { color: var(--neon-orange); }
+  .stage.s2 .stage-info .timing { color: rgba(255,149,0,0.6); }
+  .stage.s2 .card { border-color: rgba(255,149,0,0.12); }
+  .stage.s2 .card::before { background: var(--neon-orange); }
+  .stage.s2 .card:hover { box-shadow: 0 0 40px rgba(255,149,0,0.15); }
+  .stage.s2 .card-tag { background: rgba(255,149,0,0.1); color: var(--neon-orange); }
+  .stage.s2 .card li::before { color: var(--neon-orange); }
+
+  .stage.s3 .stage-num { color: var(--neon-green); }
+  .stage.s3 .stage-info h2 { color: var(--neon-green); }
+  .stage.s3 .stage-info .timing { color: rgba(57,255,20,0.6); }
+  .stage.s3 .card { border-color: rgba(57,255,20,0.12); }
+  .stage.s3 .card::before { background: var(--neon-green); }
+  .stage.s3 .card:hover { box-shadow: 0 0 40px rgba(57,255,20,0.15); }
+  .stage.s3 .card-tag { background: rgba(57,255,20,0.1); color: var(--neon-green); }
+  .stage.s3 .card li::before { color: var(--neon-green); }
+
+  /* CARDS */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    backdrop-filter: blur(12px);
+    transition: transform 0.25s, box-shadow 0.25s;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0.6;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(216,220,232,0.7);
+    line-height: 1.5;
+  }
+
+  .card li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+    top: 1px;
+  }
+
+  .card .needed {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .card .needed-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .need-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.03);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 2px 4px 2px 0;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    margin-top: 80px;
+    animation: fadeUp 1s ease-out 1.4s both;
+  }
+
+  .cta-section h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 36px;
+    border: 2px solid var(--neon-cyan);
+    border-radius: 12px;
+    background: rgba(0,240,255,0.06);
+    color: var(--neon-cyan);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .cta-btn:hover {
+    background: rgba(0,240,255,0.12);
+    box-shadow: 0 0 30px rgba(0,240,255,0.2), inset 0 0 30px rgba(0,240,255,0.05);
+    transform: translateY(-2px);
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    color: var(--muted);
+    font-size: 13px;
+    animation: fadeUp 1s ease-out 1.6s both;
+  }
+
+  .footer a {
+    color: var(--neon-cyan);
+    text-decoration: none;
+  }
+
+  .footer .token-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: rgba(57,255,20,0.5);
+    margin-top: 8px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scanline effect */
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 100%;
+    background: repeating-linear-gradient(
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.02) 2px,
+      rgba(0,0,0,0.02) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+</style>
+</head>
+<body>
+
+<div class="scanline"></div>
+<div class="glow-orb g1"></div>
+<div class="glow-orb g2"></div>
+<div class="glow-orb g3"></div>
+<div class="glow-orb g4"></div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge"><span class="pulse"></span> LIVE ROADMAP</div>
+    <h1>
+      <span class="line1">MOONECONOMY</span>
+      <span class="line2">PUBLIC ROADMAP</span>
+    </h1>
+    <p class="hero-sub">Building the first decentralized lunar economy — from crypto offshore to service infrastructure on the Moon.</p>
+    <div class="hero-token">
+      <span class="dot"></span>
+      $LYTH — MOONLYTH TOKEN
+    </div>
+  </div>
+
+  <!-- CROSS-STAGE THEMES -->
+  <div class="cross-bar">
+    <span class="cross-chip label">Cross-stage foundations:</span>
+    <span class="cross-chip robotics">◈ Robotics</span>
+    <span class="cross-chip web3">◈ Web3 / DAO</span>
+  </div>
+
+  <!-- TIMELINE LINE -->
+  <div class="timeline-line">
+    <div class="timeline-line-bg"></div>
+    <div class="timeline-dots">
+      <div class="t-dot d-1" data-label="PHASE -1"></div>
+      <div class="t-dot d0" data-label="PHASE 0"></div>
+      <div class="t-dot d1" data-label="STAGE 1"></div>
+      <div class="t-dot d2" data-label="STAGE 2"></div>
+      <div class="t-dot d3" data-label="STAGE 3"></div>
+    </div>
+  </div>
+
+  <!-- STAGES -->
+  <div class="timeline">
+
+    <!-- PHASE -1 -->
+    <div class="stage s-1">
+      <div class="stage-header">
+        <div class="stage-num">-1</div>
+        <div class="stage-info">
+          <h2>WEB3 CROWDFUND</h2>
+          <div class="timing">MONTH 1–2 · PURE WEB3 LAUNCH</div>
+        </div>
+      </div>
+      <div class="stage-focus">No legal entity. Code is law. DAO + $LYTH token + crowdsale to fund the lunar economy.</div>
+      <div class="cards">
+        <div class="card">
+          <span class="card-tag">FOUNDATION</span>
+          <h3>DAO & Token Launch</h3>
+          <ul>
+            <li>$LYTH token deployment on Arbitrum (ERC-20)</li>
+            <li>DAO governance: Governor + Timelock</li>
+            <li>Treasury under DAO control</li>
+            <li>Inflationary model with controlled emission</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-tag">CROWDSALE</span>
+          <h3>Fundraising</h3>
+          <ul>
+            <li>Crowdsale contract with vesting</li>
+            <li>Launchpad: Juicebox / Camelot DEX</li>
+            <li>Community building & early supporters</li>
+            <li>Whitepaper & public roadmap release</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-tag">DAPP</span>
+          <h3>Platform</h3>
+          <ul>
+            <li>Web dashboard: staking & voting</li>
+            <li>Wallet connect integration</li>
+            <li>Real-time treasury tracking</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 0 -->
+    <div class="stage s0">
+      <div class="stage-header">
+        <div class="stage-num">0</div>
+        <div class="stage-info">
+          <h2>PREPARATION</h2>
+          <div class="timing">MONTH 3–4 · LEGAL & TEAM</div>
+        </div>
+      </div>
+      <div class="stage-focus">Bridging code to the physical world. Jurisdiction, team assembly, investor relations.</div>
+      <div class="cards">
+        <div class="card">
+          <span class="card-tag">LEGAL</span>
+          <h3>Jurisdiction & Compliance</h3>
+          <ul>
+            <li>DAO LLC registration (Marshall Islands / Dubai VARA)</li>
+            <li>Legal opinion for $LYTH token</li>
+            <li>Regulatory framework assessment</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-tag">TEAM</span>
+          <h3>Core Team & Audit</h3>
+          <ul>
+            <li>Solidity developers + frontend engineers</li>
+            <li>Smart contract audit (CertiK / Trail of Bits)</li>
+            <li>Investor pitch deck & outreach</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1 -->
+    <div class="stage s1">
+      <div class="stage-header">
+        <div class="stage-num">01</div>
+        <div class="stage-info">
+          <h2>FINANCIAL SYSTEM & HYPE OBJECTS</h2>
+          <div class="timing">STAGE 1 · CREATION OF LUNAR ECONOMY</div>
+        </div>
+      </div>
+      <div class="stage-focus">Moon–Earth crypto offshore. Economic model at full scale. Entertainment as growth engine.</div>
+      <div class="cards">
+        <div class="card">
+          <span class="card-tag">MILESTONES</span>
+          <h3>Financial Infrastructure</h3>
+          <ul>
+            <li>Moon–Earth crypto offshore</li>
+            <li>Economic model & tokenomics at scale</li>
+            <li>Orbit L3 sovereign chain deployment</li>
+            <li>Extended DAO governance</li>
+          </ul>
+          <div class="needed">
+            <div class="needed-label">Requirements</div>
+            <span class="need-tag">Investment for launch</span>
+            <span class="need-tag">Crowd investment in $LYTH</span>
+          </div>
+        </div>
+        <div class="card">
+          <span class="card-tag">HYPE ATTRACTIONS</span>
+          <h3>Entertainment & Tourism</h3>
+          <ul>
+            <li>Lunar Casino & Hotels — design & pre-production</li>
+            <li>Stadium or Underground Labyrinth</li>
+            <li>Tokenized access & membership NFTs</li>
+          </ul>
+          <div class="needed">
+            <div class="needed-label">Requirements</div>
+            <span class="need-tag">Robots: service</span>
+            <span class="need-tag">Robots: drilling-bricks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="stage s2">
+      <div class="stage-header">
+        <div class="stage-num">02</div>
+        <div class="stage-info">
+          <h2>SCI-TECH CITY & NEW MATERIALS</h2>
+          <div class="timing">STAGE 2 · RESEARCH & PRODUCTION</div>
+        </div>
+      </div>
+      <div class="stage-focus">Underground research facilities. Creating materials impossible on Earth. Tokenization of physical assets.</div>
+      <div class="cards">
+        <div class="card">
+          <span class="card-tag">MILESTONES</span>
+          <h3>Research & Production</h3>
+          <ul>
+            <li>Underground sci-tech city</li>
+            <li>Creation of new materials</li>
+            <li>Tokenization of lunar objects (ERC-1155)</li>
+            <li>Expansion of economic model</li>
+          </ul>
+          <div class="needed">
+            <div class="needed-label">Requirements</div>
+            <span class="need-tag">Robots: drilling & construction</span>
+            <span class="need-tag">Basic equipment & tech: delivery, assembly</span>
+            <span class="need-tag">Broad & crowd investment</span>
+          </div>
+        </div>
+        <div class="card">
+          <span class="card-tag">MARKETPLACE</span>
+          <h3>Object Marketplace</h3>
+          <ul>
+            <li>Trade tokenized lunar real estate</li>
+            <li>Material futures & derivatives</li>
+            <li>Cross-chain liquidity bridges</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 3 -->
+    <div class="stage s3">
+      <div class="stage-header">
+        <div class="stage-num">03</div>
+        <div class="stage-info">
+          <h2>SERVICES & SERVICE ECONOMY</h2>
+          <div class="timing">STAGE 3 · FULL-SCALE OPERATIONS</div>
+        </div>
+      </div>
+      <div class="stage-focus">From construction to operations. Automated service crews. The Moon becomes a business hub.</div>
+      <div class="cards">
+        <div class="card">
+          <span class="card-tag">SERVICES</span>
+          <h3>Commercial Operations</h3>
+          <ul>
+            <li>Cheap assembly & testing of spacecrafts</li>
+            <li>Space debris collectors — automated crews</li>
+            <li>Space repair crews</li>
+            <li>Space support base</li>
+          </ul>
+          <div class="needed">
+            <div class="needed-label">Requirements</div>
+            <span class="need-tag">Robots: construction & assembly</span>
+            <span class="need-tag">Spaceport & aircraft</span>
+            <span class="need-tag">Spaceport + Base complex</span>
+          </div>
+        </div>
+        <div class="card">
+          <span class="card-tag">DEPIN</span>
+          <h3>IoT & Robotics Layer</h3>
+          <ul>
+            <li>On-chain robotics management</li>
+            <li>Automated task assignment & payment</li>
+            <li>DEX & DeFi on sovereign chain</li>
+            <li>Cross-chain interoperability</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>JOIN THE LUNAR ECONOMY</h2>
+    <p>Be part of the first decentralized civilization beyond Earth.</p>
+    <a class="cta-btn" href="#">
+      <span>◈</span> GET $LYTH TOKEN
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>MoonEconomy Roadmap 2025 · <a href="https://www.linkedin.com/in/misha-stepanov/" target="_blank">Created by</a></div>
+    <div class="token-info">$LYTH · MOONLYTH · Arbitrum → Orbit L3 · Inflationary Governance Token</div>
+  </div>
+
+</div>
+
+</body>
+</html>
